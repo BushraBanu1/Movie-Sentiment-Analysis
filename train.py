@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score
 
 nltk.download('stopwords')
 
@@ -43,10 +43,20 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 cm = confusion_matrix(y_test, y_pred)
 
+# 🔹 NEW METRICS (ADDED)
+precision = precision_score(y_test, y_pred, pos_label="positive")
+recall = recall_score(y_test, y_pred, pos_label="positive")
+f1 = f1_score(y_test, y_pred, pos_label="positive")
+
 # ---------------- SAVE EVERYTHING ----------------
 pickle.dump(model, open("model.pkl", "wb"))
 pickle.dump(vectorizer, open("vectorizer.pkl", "wb"))
 pickle.dump(accuracy, open("accuracy.pkl", "wb"))
 pickle.dump(cm, open("cm.pkl", "wb"))
 
-print("Model + Metrics saved ✔")
+# 🔹 SAVE NEW FILES
+pickle.dump(precision, open("precision.pkl", "wb"))
+pickle.dump(recall, open("recall.pkl", "wb"))
+pickle.dump(f1, open("f1.pkl", "wb"))
+
+print("Model + All Metrics saved ✔")

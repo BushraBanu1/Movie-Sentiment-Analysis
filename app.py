@@ -17,6 +17,11 @@ vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
 accuracy = pickle.load(open("accuracy.pkl", "rb"))
 cm = pickle.load(open("cm.pkl", "rb"))
 
+# 🔹 NEW LOAD (ADDED)
+precision = pickle.load(open("precision.pkl", "rb"))
+recall = pickle.load(open("recall.pkl", "rb"))
+f1 = pickle.load(open("f1.pkl", "rb"))
+
 # ---------------- CLEAN TEXT ----------------
 def clean_text(text):
     text = str(text).lower()
@@ -100,14 +105,20 @@ elif menu == "📊 Dashboard":
 
     st.title("📊 Model Performance Dashboard")
 
-    # ---------------- METRIC CARDS ----------------
-    col1, col2 = st.columns(2)
+    # 🔹 UPDATED METRIC CARDS (ONLY CHANGE)
+    col1, col2, col3, col4 = st.columns(4)
 
     with col1:
         st.metric(label="🎯 Accuracy", value=f"{accuracy:.2f}")
 
     with col2:
-        st.metric(label="📚 Model", value="Logistic Regression")
+        st.metric(label="📌 Precision", value=f"{precision:.2f}")
+
+    with col3:
+        st.metric(label="🔁 Recall", value=f"{recall:.2f}")
+
+    with col4:
+        st.metric(label="⚖ F1 Score", value=f"{f1:.2f}")
 
     st.markdown("---")
 
@@ -129,4 +140,3 @@ elif menu == "📊 Dashboard":
     disp.plot(ax=ax2, cmap="Blues")
 
     st.pyplot(fig2)
-
